@@ -1,17 +1,21 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyX : MonoBehaviour
 {
-    public float speed;
+    private SpawnManagerX speedBoost;
+    public float speed = 100;
     private Rigidbody enemyRb;
-    private GameObject playerGoal;
+    public GameObject playerGoal;
 
     // Start is called before the first frame update
     void Start()
     {
+        speedBoost = GameObject.Find("Spawn Manager").GetComponent<SpawnManagerX>();
+        speed= speedBoost.enemySpeed;
         enemyRb = GetComponent<Rigidbody>();
+        playerGoal =GameObject.Find("Player Goal");
     }
 
     // Update is called once per frame
@@ -19,8 +23,6 @@ public class EnemyX : MonoBehaviour
     {
         // Set enemy direction towards player goal and move there
         Vector3 lookDirection = (playerGoal.transform.position - transform.position).normalized;
-        
-        //Vector3 lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * speed * Time.deltaTime);
 
     }
